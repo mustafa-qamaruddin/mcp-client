@@ -10,4 +10,4 @@ pluginManagement {
         id(quarkusPluginId) version quarkusPluginVersion
     }
 }
-rootProject.name="mcp-client"
+rootProject.name="org.mqubits.mcp-client"

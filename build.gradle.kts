@@ -16,6 +16,9 @@ dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkus:quarkus-arc")
     testImplementation("io.quarkus:quarkus-junit")
+
+    // project dependencies
+    implementation("io.modelcontextprotocol.sdk:mcp:1.1.2")
 }
 
 group = "org.mqubits"
