@@ -5,7 +5,6 @@ import io.modelcontextprotocol.client.McpSyncClient;
 import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
 import io.modelcontextprotocol.spec.McpClientTransport;
 import io.modelcontextprotocol.spec.McpSchema;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
 
@@ -18,15 +17,12 @@ public class MCPClient {
 
   private static final Logger logger = Logger.getLogger(MCPClient.class);
 
-  @PostConstruct
-  public void init() {
+  public String connect() {
     McpClientTransport transport = HttpClientSseClientTransport
       .builder("http://localhost:8080/mcp/sse")
       .build();
     this._client = McpClient.sync(transport).build();
-  }
 
-  public String connect() {
     McpSchema.InitializeResult initRes = this._client.initialize();
     return initRes.serverInfo().name();
   }
