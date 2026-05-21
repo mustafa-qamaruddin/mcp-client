@@ -19,8 +19,6 @@ public class App {
   }
 
   public static class QApp implements QuarkusApplication {
-
-
     @Inject
     MCPClient mcpClient;
 

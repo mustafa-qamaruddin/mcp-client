@@ -8,6 +8,7 @@ import io.modelcontextprotocol.spec.McpSchema;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ public class MCPClient {
   public String connect() {
     McpClientTransport transport = HttpClientSseClientTransport
       .builder("http://localhost:8080/mcp/sse")
+      .sseEndpoint("/mcp/sse")
+      .connectTimeout(Duration.ofSeconds(10))
       .build();
     this._client = McpClient.sync(transport).build();
 
@@ -56,9 +59,13 @@ public class MCPClient {
       return;
     }
 
-    response.content().stream()
-      .filter(content -> content.type().equals(McpSchema.TextContent.class.getTypeName()))
-      .iterator()
-      .forEachRemaining(content -> logger.info(content.toString()));
+    List<McpSchema.TextContent> results = response.content().stream()
+      .filter(content -> content.getClass().getTypeName().equals(McpSchema.TextContent.class.getTypeName()))
+      .map(content -> (McpSchema.TextContent) content)
+      .toList();
+
+    for (McpSchema.TextContent content: results ) {
+      logger.info(content.text());
+    }
   }
 }
