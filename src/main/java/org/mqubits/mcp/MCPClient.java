@@ -22,7 +22,6 @@ public class MCPClient {
     McpClientTransport transport = HttpClientSseClientTransport
       .builder("http://localhost:8080/mcp/sse")
       .sseEndpoint("/mcp/sse")
-      .connectTimeout(Duration.ofSeconds(10))
       .build();
     this._client = McpClient.sync(transport).build();
 
